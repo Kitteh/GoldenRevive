@@ -1,0 +1,12 @@
+Info:
+    Version: 0.4
+ReviveItems:
+    Item1:
+        CriticalHealth: 6
+        ReviveItem: 322
+        ReviveType: Restore
+        HealthOnRevive: 20
+    Item2:
+        ReviveItem: 86
+        ReviveType: Revive
+    

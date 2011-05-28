@@ -1,0 +1,6 @@
+name: GoldenRevive
+main: com.bukkit.Kitteh.GoldenRevive.GoldenRevive
+version: 0.4
+authors:
+    - Kitteh
+    - TheDeejay
