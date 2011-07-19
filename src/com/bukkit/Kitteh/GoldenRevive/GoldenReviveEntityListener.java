@@ -1,9 +1,7 @@
 package com.bukkit.Kitteh.GoldenRevive;
 
-import java.util.Iterator;
 import java.util.List;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -32,9 +30,13 @@ public class GoldenReviveEntityListener extends EntityListener {
     	if(event.getEntity() instanceof Player) {
     		Player p = (Player) event.getEntity();
     		if (p!=null){
-    			if  (GoldenRevive.permissionHandler!=null)
+    			if (GoldenRevive.permissionHandler!=null){
     				if (!GoldenRevive.permissionHandler.has(p, "GoldenRevive.Restore"))
     					return;
+    			}else if (GoldenRevive.superPermissions == true){
+    				if (!p.hasPermission("GoldenRevive.Restore"))
+    					return;
+    			}
 	    		try{
 	    			Inventory inv = p.getInventory();
 	    			int playerHealth = p.getHealth() - p.getLastDamage();
@@ -74,9 +76,13 @@ public class GoldenReviveEntityListener extends EntityListener {
     	Player p = (Player) e.getEntity();
     	if (p!=null){
     		//Check if player has permission
-    		if  (GoldenRevive.permissionHandler!=null)
+    		if  (GoldenRevive.permissionHandler!=null){
 				if (!GoldenRevive.permissionHandler.has(p, "GoldenRevive.Revive"))
 					return;
+    		}else if (GoldenRevive.superPermissions == true){
+				if (!p.hasPermission("GoldenRevive.Revive"))
+					return;
+			}
     		//Check if the player had a (ReviveItem)
     		List<ItemStack> items = e.getDrops();
     		for(ItemStack item : items){

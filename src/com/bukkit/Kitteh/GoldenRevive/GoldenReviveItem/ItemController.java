@@ -3,12 +3,7 @@ package com.bukkit.Kitteh.GoldenRevive.GoldenReviveItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-
-import org.bukkit.Material;
-
-import com.bukkit.Kitteh.GoldenRevive.GoldenRevive;
 
 public class ItemController {
 	private HashMap<Integer, ReviveItem> reviveItems;

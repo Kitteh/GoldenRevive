@@ -1,12 +1,9 @@
 package com.bukkit.Kitteh.GoldenRevive;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Map;
 import java.util.zip.ZipException;
 
@@ -105,7 +102,6 @@ public class GoldenReviveConfig {
 		if (reviveItems == null)
 			plugin.consoleMessage("There are no revive items in your config");
     	for (Map.Entry<String, ConfigurationNode>entry : reviveItems.entrySet()){
-    		String key = entry.getKey();
     		ConfigurationNode node = entry.getValue();
     		
     		//Start creating and populating the handler

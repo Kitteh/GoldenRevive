@@ -1,12 +1,6 @@
 package com.bukkit.Kitteh.GoldenRevive;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -16,12 +10,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.util.config.Configuration;
-import org.bukkit.util.config.ConfigurationNode;
-
-
 import com.bukkit.Kitteh.GoldenRevive.GoldenReviveItem.ItemController;
-import com.bukkit.Kitteh.GoldenRevive.GoldenReviveItem.ReviveItem;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
@@ -35,7 +24,7 @@ public class GoldenRevive extends JavaPlugin {
     private final GoldenRevivePlayerListener playerListener = new GoldenRevivePlayerListener(this);
     private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
     public static PermissionHandler permissionHandler;
-    
+    public static boolean superPermissions = false;
     public ItemController itemController;
     public HashMap<Player, Location> reviveLocations;
     /**
@@ -48,7 +37,7 @@ public class GoldenRevive extends JavaPlugin {
 	        /* Register Events */
 	        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
 	        pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Event.Priority.Normal, this);
-	        pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerListener, Event.Priority.High, this);
+	        pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerListener, Event.Priority.Highest, this);
 	        /* Load config */
 	        itemController = new ItemController();
 	        reviveLocations = new HashMap<Player,Location>();
@@ -56,7 +45,9 @@ public class GoldenRevive extends JavaPlugin {
 	        loadConfiguration();
 	        if (setupPermissions()){
 	        	//permissions detected
-	        	consoleMessage("Permissions Detected");
+	        	consoleMessage("Permissions Detected - using");
+	        }else if(setupSuperPermissions()){
+	        	consoleMessage("Bukkit permissions detected - using");
 	        }else{
 	        	consoleMessage("Permissions not detected - Defaulting to everyone");
 	        }
@@ -67,7 +58,8 @@ public class GoldenRevive extends JavaPlugin {
     		pm.disablePlugin(this);
     	}
     }
-    public void onDisable() {
+
+	public void onDisable() {
     	PluginManager pm = getServer().getPluginManager();
     	pm.disablePlugin(this);
         consoleMessage("Plugin Disabled");
@@ -88,8 +80,7 @@ public class GoldenRevive extends JavaPlugin {
     	String dir = "plugins/GoldenRevive/";
     	String filename = "config.yml";
     	//Create a new configuration file and load it
-    	GoldenReviveConfig mainConfig = new GoldenReviveConfig(dir,filename,this);
-    	
+    	new GoldenReviveConfig(dir,filename,this);	
     	//begin to load all the values into the program
     	
     	//setReviveMessage(reviveItem);
@@ -122,5 +113,13 @@ public class GoldenRevive extends JavaPlugin {
         }
         return false;
     }
+    private boolean setupSuperPermissions() {
+		Plugin superPermissionsPlugin = this.getServer().getPluginManager().getPlugin("PermissionsBukkit");
+		if (superPermissionsPlugin !=null){
+			superPermissions = true;
+			return true;
+		}
+		return false;
+	}
 }
 

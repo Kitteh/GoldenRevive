@@ -1,6 +1,17 @@
 name: GoldenRevive
 main: com.bukkit.Kitteh.GoldenRevive.GoldenRevive
-version: 0.4
+version: 0.6
 authors:
     - Kitteh
-    - TheDeejay
+permissions:
+    GoldenRevive.*:
+        description: Gives access to all revive methods
+        children:
+             GoldenRevive.Revive: true
+             GoldenRevive.Restore: true
+        GoldenRevive.Revive:
+             description: Allows user to revive on death
+             default: true
+        GoldenRevive.Restore:
+             description: Allows users to be saved by an item (restored to full health before death)
+             default: true
